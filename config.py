@@ -15,7 +15,7 @@ class Config(object):
             dataset_name = 'Mnist',     #所选择的数据集的名称
             model_name = 'LeNet',       #攻击模型的名称
             criterion_name = 'CrossEntropyLoss',       #损失函数的名称
-            attack_name = 'FGSM',       #设定攻击方法的名称
+            attack_name = 'BIM',       #设定攻击方法的名称
         )
 
 
@@ -44,8 +44,15 @@ class Config(object):
         #################################################攻击方法
         ##########################FGSM方法
         self.FGSM = dict(
-            eps = 0.5,                  #FGSM的控制大小的参数
-            isTarget = True,           #控制攻击方式，目标攻击、无目标攻击
+            eps = 0.2,                  #FGSM的控制大小的参数
+            isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
+            target = 3,               #目标攻击的目标
+        )
+        ##########################BIM方法
+        self.BIM = dict(
+            eps = 0.03,                  #BIM的控制大小的参数
+            epoch = 10,                 #BIM的迭代次数
+            isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
 

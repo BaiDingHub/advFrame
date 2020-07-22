@@ -50,9 +50,9 @@ attacker = Attacker(model,criterion,config,attack_method)
 # print(y,nowLabel)
 
 ###############################攻击整个数据集
-acc = attacker.attackSet(TestLoader)
+acc,mean = attacker.attackSet(TestLoader)
 Log['acc'] = acc
-
+Log['pertubmean'] = mean
 
 
 ####################################log保存

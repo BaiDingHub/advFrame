@@ -76,11 +76,14 @@ class Attacker(object):
     def attackSet(self,dataLoader):
         sucessNum = 0
         dataNum = 0
+        pertubmean = []
         for idx,(x,y) in enumerate(tqdm(dataLoader)):
             x_advs,pertubations,nowLabels = self.attackOnce(x,y)
             dataNum +=  x.shape[0]
             sucessNum += (y.numpy()!=nowLabels).sum()
+            pertubmean.append(pertubations.mean())
+        mean = np.mean(pertubmean)
         acc = 1-sucessNum/dataNum
-        return acc
+        return acc,mean
   
         
