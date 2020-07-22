@@ -52,7 +52,7 @@ class Config(object):
         self.BIM = dict(
             eps = 0.03,                  #BIM的控制大小的参数
             epoch = 10,                 #BIM的迭代次数
-            isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
+            isTarget = True,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
 

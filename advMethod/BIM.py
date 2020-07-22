@@ -70,8 +70,8 @@ class BIM(object):
     def _attackWithTarget(self,x,target,epoch,eps):
         target = torch.tensor([target]).cuda()
         x_adv = x
-        x_adv.requires_grad = True
         for i in range(epoch):
+            x_adv.requires_grad = True
             logits = self.model(x_adv)
                 
             loss = self.criterion(logits, target)
@@ -84,7 +84,7 @@ class BIM(object):
             #得到梯度的符号
             sign_data_grad = data_grad.sign()
 
-            x_adv = x_adv - eps*sign_data_grad
+            x_adv = x_adv.detach() - eps*sign_data_grad
             x_adv = torch.clamp(x_adv, 0, 1)
             pertubation = x_adv - x
 

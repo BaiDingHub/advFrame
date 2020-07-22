@@ -29,6 +29,12 @@ class Attacker(object):
                 if len(device_ids) > 1:
                     self.model = nn.DataParallel(model, device_ids=device_ids)
                 self.use_gpu = True
+        #########################攻击方式---目标攻击设置
+        self.isTarget = False
+        self.target = 0
+        if 'isTarget' in getattr(self.config,self.config.CONFIG['attack_name']):
+            self.isTarget = getattr(self.config,self.config.CONFIG['attack_name'])['isTarget']
+            self.target =  getattr(self.config,self.config.CONFIG['attack_name'])['target']        
 
 
     def attackOnce(self,x,y):
@@ -79,8 +85,12 @@ class Attacker(object):
         pertubmean = []
         for idx,(x,y) in enumerate(tqdm(dataLoader)):
             x_advs,pertubations,nowLabels = self.attackOnce(x,y)
-            dataNum +=  x.shape[0]
-            sucessNum += (y.numpy()!=nowLabels).sum()
+            if self.isTarget:
+                sucessNum += ((self.target ==nowLabels) == (self.target !=y.numpy())).sum()
+                dataNum += (self.target != y.numpy()).sum()
+            else:
+                dataNum +=  x.shape[0]
+                sucessNum += (y.numpy()!=nowLabels).sum()
             pertubmean.append(pertubations.mean())
         mean = np.mean(pertubmean)
         acc = 1-sucessNum/dataNum
