@@ -23,7 +23,7 @@ TestSet = getattr(dataLoader,dataset_name+'TestSet')(**getattr(config,dataset_na
 
 ######################################加载数据加载器
 TrainLoader = DataLoader(TrainSet,batch_size=4,shuffle=True,num_workers=4)
-TestLoader = DataLoader(TestSet,batch_size=1,shuffle=False,num_workers=1)
+TestLoader = DataLoader(TestSet,batch_size=32,shuffle=False,num_workers=1)
 
 ######################################加载模型
 model_name = config.CONFIG['model_name']

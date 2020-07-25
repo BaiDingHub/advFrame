@@ -71,7 +71,7 @@ class FGSM(object):
         return x_adv,pertubation
 
     def _attackWithTarget(self,x,target,eps):
-        target = torch.tensor([target]).cuda()
+        target = torch.tensor([target]*x.shape[0]).cuda()
         x_adv = x
         x_adv.requires_grad = True
         logits = self.model(x_adv)

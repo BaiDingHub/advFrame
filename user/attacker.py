@@ -18,23 +18,26 @@ class Attacker(object):
         self.attack_method = attack_method
         #########################GPU配置
         self.use_gpu = False
-        if self.config.GPU['use_gpu']:
+        self.device_ids = self.config.GPU['device_id']
+        if self.device_ids:
             if not torch.cuda.is_available():
                 print("There's no GPU is available , Now Automatically converted to CPU device")
             else:
                 message = "There's no GPU is available"
-                assert len(self.config.GPU['device_id']) > 0,message
-                device_ids = self.config.GPU['device_id']
-                self.model = self.model.cuda(device_ids[0])
-                if len(device_ids) > 1:
-                    self.model = nn.DataParallel(model, device_ids=device_ids)
+                assert len(self.device_ids) > 0,message
+                self.model = self.model.cuda(self.device_ids[0])
+                if len(self.device_ids) > 1:
+                    self.model = nn.DataParallel(model, device_ids=self.device_ids)
                 self.use_gpu = True
+        #########################攻击信息
+        self.attack_name = self.config.CONFIG['attack_name']
         #########################攻击方式---目标攻击设置
         self.isTarget = False
         self.target = 0
-        if 'isTarget' in getattr(self.config,self.config.CONFIG['attack_name']):
-            self.isTarget = getattr(self.config,self.config.CONFIG['attack_name'])['isTarget']
-            self.target =  getattr(self.config,self.config.CONFIG['attack_name'])['target']        
+        if 'isTarget' in getattr(self.config,self.attack_name):
+            self.isTarget = getattr(self.config,self.attack_name)['isTarget']
+            self.target =  getattr(self.config,self.attack_name)['target']        
+
 
 
     def attackOnce(self,x,y):
@@ -56,8 +59,8 @@ class Attacker(object):
         if type(y) is not torch.tensor:
             y = torch.Tensor(y.float())
         if self.use_gpu:
-            x = x.cuda(self.config.GPU['device_id'][0]).float()
-            y = y.cuda(self.config.GPU['device_id'][0]).long()
+            x = x.cuda(self.device_ids[0]).float()
+            y = y.cuda(self.device_ids[0]).long()
         x_advs,pertubations,nowLabels = self.attack_method.attack(x,y,**getattr(self.config,self.config.CONFIG['attack_name']))
         return x_advs,pertubations,nowLabels 
 

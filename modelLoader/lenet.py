@@ -48,8 +48,8 @@ def loadLeNet(filepath):
         [type]: [返回一个预训练的LeNet]
     """
     checkpoint = torch.load(filepath)
-    model = checkpoint['model']  # 提取网络结构
-    model.load_state_dict(checkpoint['model_state_dict'])  # 加载网络权重参数
+    model = LeNet()
+    model.load_state_dict(checkpoint['state_dict'])  # 加载网络权重参数
     return model
 
 if __name__ == "__main__":

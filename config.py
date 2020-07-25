@@ -23,7 +23,7 @@ class Config(object):
         #################################################模型选择
         ##########################模型参数
         self.LeNet = dict(
-            filepath = '/home/baiding/Desktop/Study/Deep/pretrained/lenet/lenet_1.pkl',     #预训练模型所在的位置
+            filepath = '/home/baiding/Desktop/Study/Deep/pretrained/lenet/LeNet_1.pkl',     #预训练模型所在的位置
         )
 
 
@@ -44,15 +44,15 @@ class Config(object):
         #################################################攻击方法
         ##########################FGSM方法
         self.FGSM = dict(
-            eps = 0.2,                  #FGSM的控制大小的参数
+            eps = 0.1,                  #FGSM的控制大小的参数
             isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
         ##########################BIM方法
         self.BIM = dict(
-            eps = 0.03,                  #BIM的控制大小的参数
+            eps = 0.01,                  #BIM的控制大小的参数
             epoch = 10,                 #BIM的迭代次数
-            isTarget = True,           #控制攻击方式，目标攻击、无目标攻击
+            isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
 
@@ -62,9 +62,7 @@ class Config(object):
         self.expTime = 1                #第expTime次实验
         self.logFileName = self.CONFIG['dataset_name']+'_'+self.CONFIG['model_name']+"_" + \
             self.CONFIG['criterion_name']+'_'+self.CONFIG['attack_name']+'_'+ \
-            str(self.expTime)+'.txt'
-        
-    
+            str(self.expTime)+'.log'
 
     def logOutput(self):
         log = {}
@@ -72,6 +70,13 @@ class Config(object):
         log['Introduce'] = self.Introduce
         log['CONFIG'] = self.CONFIG
         for name,value in self.CONFIG.items():
-            if hasattr(self,value):
+            if type(value) is str and hasattr(self,value):
                 log[value] = getattr(self,value)
+            else:
+                log[name] = value
         return log
+        
+    
+
+    
+    

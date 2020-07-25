@@ -68,7 +68,7 @@ class BIM(object):
         return x_adv,pertubation
 
     def _attackWithTarget(self,x,target,epoch,eps):
-        target = torch.tensor([target]).cuda()
+        target = torch.tensor([target]*x.shape[0]).cuda()
         x_adv = x
         for i in range(epoch):
             x_adv.requires_grad = True
