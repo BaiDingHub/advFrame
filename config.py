@@ -2,6 +2,7 @@ class Config(object):
     def __init__(self):
         self.ENV = 'default'            #当前的环境参数
         self.Introduce = 'Not at the moment'    #对此次实验的描述
+        self.VERSION = 1                #当前的版本
 
 
         ##################################################GPU配置
@@ -36,7 +37,7 @@ class Config(object):
         ##########################数据集参数
         self.Mnist = dict(
             dirname = '/home/baiding/Desktop/Study/Deep/datasets/MNIST/raw',            #MNIST数据集存放的文件夹
-            needVector = False,         #False表示得到784维向量数据，True表示得到28*28的图片数据
+            is_vector = False,         #False表示得到784维向量数据，True表示得到28*28的图片数据
         )
 
 
@@ -45,26 +46,28 @@ class Config(object):
         ##########################FGSM方法
         self.FGSM = dict(
             eps = 0.1,                  #FGSM的控制大小的参数
-            isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
+            is_target = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
         ##########################BIM方法
         self.BIM = dict(
             eps = 0.01,                  #BIM的控制大小的参数
             epoch = 10,                 #BIM的迭代次数
-            isTarget = False,           #控制攻击方式，目标攻击、无目标攻击
+            is_target = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
 
 
         #################################################log
-        self.logDir = './log'           #log所在的文件夹
-        self.expTime = 1                #第expTime次实验
-        self.logFileName = self.CONFIG['dataset_name']+'_'+self.CONFIG['model_name']+"_" + \
-            self.CONFIG['criterion_name']+'_'+self.CONFIG['attack_name']+'_'+ \
-            str(self.expTime)+'.log'
+        self.Checkpoint = dict(
+            log_dir = './log',          #log所在的文件夹
+            log_filename = '{}_{}_{}_{}_V{}.log'.format(
+                self.CONFIG['dataset_name'], self.CONFIG['model_name'],
+                self.CONFIG['criterion_name'], self.CONFIG['attack_name'],
+                self.VERSION),              #log文件名称
+        )
 
-    def logOutput(self):
+    def log_output(self):
         log = {}
         log['ENV'] = self.ENV
         log['Introduce'] = self.Introduce

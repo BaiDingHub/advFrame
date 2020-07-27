@@ -1,6 +1,6 @@
 
 
-def logWrite(file,log):
+def log_write(file,log):
     """[将log写入文件中]
 
     Args:
