@@ -16,7 +16,7 @@ class Config(object):
             dataset_name = 'Mnist',     #所选择的数据集的名称
             model_name = 'LeNet',       #攻击模型的名称
             criterion_name = 'CrossEntropyLoss',       #损失函数的名称
-            attack_name = 'BIM',       #设定攻击方法的名称
+            attack_name = 'DeepFool',       #设定攻击方法的名称
         )
 
 
@@ -56,7 +56,10 @@ class Config(object):
             is_target = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
-
+        ##########################DeepFool方法
+        self.DeepFool = dict(
+            max_iter = 50,              #最大寻找次数
+        )
 
         #################################################log
         self.Checkpoint = dict(

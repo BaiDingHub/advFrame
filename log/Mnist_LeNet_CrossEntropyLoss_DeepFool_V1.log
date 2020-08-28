@@ -1,0 +1,12 @@
+ENV	:default
+Introduce	:Not at the moment
+CONFIG	:{'dataset_name': 'Mnist', 'model_name': 'LeNet', 'criterion_name': 'CrossEntropyLoss', 'attack_name': 'DeepFool'}
+Mnist	:{'dirname': '/home/baiding/Desktop/Study/Deep/datasets/MNIST/raw', 'is_vector': False}
+LeNet	:{'filepath': '/home/baiding/Desktop/Study/Deep/pretrained/lenet/LeNet_1.pkl'}
+criterion_name	:CrossEntropyLoss
+DeepFool	:{'max_iter': 50}
+acc	:0.4877
+pertubmean	:0.009784711
+
+
+
