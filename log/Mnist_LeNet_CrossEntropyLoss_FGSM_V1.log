@@ -4,9 +4,7 @@ CONFIG	:{'dataset_name': 'Mnist', 'model_name': 'LeNet', 'criterion_name': 'Cros
 Mnist	:{'dirname': '/home/baiding/Study/AI/dataset/MNIST/raw', 'is_vector': False}
 LeNet	:{'filepath': '/home/baiding/Study/AI/pretrained/lenet/LeNet_1.pkl'}
 criterion_name	:CrossEntropyLoss
-FGSM	:{'eps': 0.1171875, 'is_target': False, 'target': 3}
-acc	:0.6471
-pertubmean	:0.043357607
+FGSM	:{'eps': 0.15625, 'is_target': False, 'target': 3}
 
 
 

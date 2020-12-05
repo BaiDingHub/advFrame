@@ -45,13 +45,13 @@ class Config(object):
         #################################################攻击方法
         ##########################FGSM方法
         self.FGSM = dict(
-            eps = 30/256,                  #FGSM的控制大小的参数
+            eps = 40/256,                  #FGSM的控制大小的参数
             is_target = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )
         ##########################BIM方法
         self.BIM = dict(
-            eps = 0.01,                  #BIM的控制大小的参数
+            eps = 2/256,                  #BIM的控制大小的参数
             epoch = 10,                 #BIM的迭代次数
             is_target = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
@@ -59,6 +59,12 @@ class Config(object):
         ##########################DeepFool方法
         self.DeepFool = dict(
             max_iter = 50,              #最大寻找次数
+        )
+        #-------------------------JSMA
+        self.JSMA = dict(
+            eps = 20/256,                  #JSMA的控制大小的参数
+            is_target = False,           #控制攻击方式，目标攻击、无目标攻击
+            target = 3,               #目标攻击的目标
         )
 
         #################################################log
@@ -68,6 +74,7 @@ class Config(object):
                 self.CONFIG['dataset_name'], self.CONFIG['model_name'],
                 self.CONFIG['criterion_name'], self.CONFIG['attack_name'],
                 self.VERSION),              #log文件名称
+            figure_dir = './figure/'+ self.CONFIG['attack_name'],  # 图片文件夹
         )
 
     def log_output(self):

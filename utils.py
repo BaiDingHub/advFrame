@@ -1,4 +1,4 @@
-
+import os
 
 def log_write(file,log):
     """[将log写入文件中]
@@ -12,3 +12,7 @@ def log_write(file,log):
         string += key + '\t:'+str(value) +'\n'
     string += '\n\n\n'
     file.write(string)
+
+def ensure_dir(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)

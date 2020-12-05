@@ -1,12 +1,12 @@
 ENV	:default
 Introduce	:Not at the moment
 CONFIG	:{'dataset_name': 'Mnist', 'model_name': 'LeNet', 'criterion_name': 'CrossEntropyLoss', 'attack_name': 'BIM'}
-Mnist	:{'dirname': '/home/baiding/Desktop/Study/Deep/datasets/MNIST/raw', 'is_vector': False}
-LeNet	:{'filepath': '/home/baiding/Desktop/Study/Deep/pretrained/lenet/LeNet_1.pkl'}
+Mnist	:{'dirname': '/home/baiding/Study/AI/dataset/MNIST/raw', 'is_vector': False}
+LeNet	:{'filepath': '/home/baiding/Study/AI/pretrained/lenet/LeNet_1.pkl'}
 criterion_name	:CrossEntropyLoss
-BIM	:{'eps': 0.01, 'epoch': 10, 'is_target': False, 'target': 3}
-acc	:0.5542
-pertubmean	:0.026896376
+BIM	:{'eps': 0.0078125, 'epoch': 10, 'is_target': False, 'target': 3}
+acc	:0.7536
+pertubmean	:0.02157487
 
 
 

@@ -68,10 +68,12 @@ class Attacker(object):
         """ 
         
         #放到GPU设备中
-        if type(x) is np.ndarray:
-            x = torch.from_numpy(x)
-        if type(y) is not torch.tensor:
-            y = torch.Tensor(y.float())
+        # if type(x) is np.ndarray:
+        #     x = torch.from_numpy(x)
+        # if type(y) is not torch.tensor:
+        #     y = torch.Tensor(y.float())
+        x = torch.Tensor(x)
+        y = torch.Tensor(y)
 
         x = x.to(self.device).float()
         y = y.to(self.device).long()
@@ -97,7 +99,7 @@ class Attacker(object):
         x = np.expand_dims(x, axis=0)                    #拓展成四维
         y = np.array(list([y]))                         #转成矩阵
         x_adv,pertubation,nowLabel = self.attack_batch(x, y)
-        return x_adv[0], pertubation[0] ,nowLabel[0]
+        return x[0], x_adv[0], pertubation[0] ,nowLabel[0]
 
     def attack_set(self, data_loader):
         """[对一个数据集进行攻击]
