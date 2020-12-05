@@ -1,25 +1,23 @@
 import numpy as np
 import torch
 import torch.nn as nn
+from adv_method.base_method import BaseMethod
 
-
-class DeepFool(object):
+class DeepFool(BaseMethod):
     """[DeepFool]
 
     Args:
         self.model ([]): 要攻击的模型
         self.criterion ([]): 损失函数
     """
-    def __init__(self, model, criterion):
+    def __init__(self, model, criterion = None, use_gpu = False, device_id = [0]):
         """[summary]
 
         Args:
             model ([type]): [要攻击的模型]
             criterion ([type]): [损失函数]
         """
-        super(DeepFool,self).__init__()
-        self.model = model
-        self.criterion = criterion
+        super(DeepFool,self).__init__(model = model, criterion= criterion, use_gpu= use_gpu, device_id= device_id)
 
     def attack(self, x, y=0, max_iter=10, is_target=False, target=0):
         """[summary]
@@ -45,11 +43,13 @@ class DeepFool(object):
             message = "At present, we haven't implemented the No Target attack algorithm "
             assert x_adv is not None,message
 
-        logits = self.model(x_adv)
+        logits = self.model(x_adv).cpu().detach().numpy()
         pred = logits.argmax(1)
-        
-        return x_adv.cpu().detach().numpy(), pertubation.cpu().detach().numpy(), pred.cpu().detach().numpy()
 
+        x_adv = x_adv.cpu().detach().numpy()
+        pertubation = pertubation.cpu().detach().numpy()
+        
+        return x_adv, pertubation, logits, pred
 
     def _attackWithNoTarget(self, x, y, max_iter):
         

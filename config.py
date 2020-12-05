@@ -16,7 +16,7 @@ class Config(object):
             dataset_name = 'Mnist',     #所选择的数据集的名称
             model_name = 'LeNet',       #攻击模型的名称
             criterion_name = 'CrossEntropyLoss',       #损失函数的名称
-            attack_name = 'DeepFool',       #设定攻击方法的名称
+            attack_name = 'FGSM',       #设定攻击方法的名称
         )
 
 
@@ -24,7 +24,7 @@ class Config(object):
         #################################################模型选择
         ##########################模型参数
         self.LeNet = dict(
-            filepath = '/home/baiding/Desktop/Study/Deep/pretrained/lenet/LeNet_1.pkl',     #预训练模型所在的位置
+            filepath = '/home/baiding/Study/AI/pretrained/lenet/LeNet_1.pkl',     #预训练模型所在的位置
         )
 
 
@@ -36,7 +36,7 @@ class Config(object):
         #################################################数据集
         ##########################数据集参数
         self.Mnist = dict(
-            dirname = '/home/baiding/Desktop/Study/Deep/datasets/MNIST/raw',            #MNIST数据集存放的文件夹
+            dirname = '/home/baiding/Study/AI/dataset/MNIST/raw',            #MNIST数据集存放的文件夹
             is_vector = False,         #False表示得到784维向量数据，True表示得到28*28的图片数据
         )
 
@@ -45,7 +45,7 @@ class Config(object):
         #################################################攻击方法
         ##########################FGSM方法
         self.FGSM = dict(
-            eps = 0.1,                  #FGSM的控制大小的参数
+            eps = 30/256,                  #FGSM的控制大小的参数
             is_target = False,           #控制攻击方式，目标攻击、无目标攻击
             target = 3,               #目标攻击的目标
         )

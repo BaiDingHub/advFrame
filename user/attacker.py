@@ -23,19 +23,26 @@ class Attacker(object):
         self.criterion = criterion
         self.config = config
         self.attack_method = attack_method
+
+
         #########################GPU配置
         self.use_gpu = False
-        self.device_ids = self.config.GPU['device_id']
-        if self.device_ids:
+        self.device_ids = [0]
+        self.device = torch.device('cpu')
+        if self.config.GPU['use_gpu']:
             if not torch.cuda.is_available():
                 print("There's no GPU is available , Now Automatically converted to CPU device")
             else:
                 message = "There's no GPU is available"
+                self.device_ids = self.config.GPU['device_id']
                 assert len(self.device_ids) > 0,message
-                self.model = self.model.cuda(self.device_ids[0])
+                self.device = torch.device('cuda', self.device_ids[0])
+                self.model = self.model.to(self.device)
                 if len(self.device_ids) > 1:
                     self.model = nn.DataParallel(model, device_ids=self.device_ids)
                 self.use_gpu = True
+
+
         #########################攻击信息
         self.attack_name = self.config.CONFIG['attack_name']
         #########################攻击方式---目标攻击设置
@@ -65,10 +72,11 @@ class Attacker(object):
             x = torch.from_numpy(x)
         if type(y) is not torch.tensor:
             y = torch.Tensor(y.float())
-        if self.use_gpu:
-            x = x.cuda(self.device_ids[0]).float()
-            y = y.cuda(self.device_ids[0]).long()
-        x_advs,pertubations,nowLabels = self.attack_method.attack(
+
+        x = x.to(self.device).float()
+        y = y.to(self.device).long()
+
+        x_advs, pertubations, logits, nowLabels = self.attack_method.attack(
             x, y, **getattr(self.config, self.config.CONFIG['attack_name']))
 
         return x_advs,pertubations,nowLabels 

@@ -3,8 +3,7 @@ import torch
 import torch.nn as nn
 from adv_method.base_method import BaseMethod
 
-
-class BIM(BaseMethod):
+class PGD(BaseMethod):
     """[BIM]
     
     Args:
@@ -18,7 +17,7 @@ class BIM(BaseMethod):
             model ([type]): [要攻击的模型]
             criterion ([type]): [损失函数]
         """
-        super(BIM,self).__init__(model = model, criterion= criterion, use_gpu= use_gpu, device_id= device_id)
+        super(PGD,self).__init__(model = model, criterion= criterion, use_gpu= use_gpu, device_id= device_id)
 
     def attack(self, x, y=0, eps=0.03, epoch=5, is_target=False, target=0):
         """[summary]
@@ -52,6 +51,7 @@ class BIM(BaseMethod):
         pertubation = pertubation.cpu().detach().numpy()
         
         return x_adv, pertubation, logits, pred
+
 
     def _attackWithNoTarget(self, x, y, epoch, eps):
         x_adv = x
